@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Product API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /products:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/QParam"
+      responses:
+        "200":
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+              examples:
+                multiple:
+                  summary: Plusieurs produits
+                  value:
+                    - name: Tampico
+                      expiration_datetime: 2025-09-01T12:00:00
+                      price: 2500.00
+                    - name: Socolait
+                      expiration_datetime: 2025-08-30T10:00:00
+                      price: 1500.00
+                empty:
+                  summary: Aucun produit trouvé
+                  value: []
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        expiration_datetime:
+          type: string
+          format: date-time
+        price:
+          type: number
+          format: float
+      example:
+        name: Yaourt
+        expiration_datetime: 2025-08-25T18:00:00
+        price: 0.99
+
+  parameters:
+    LimitParam:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+      example: 1
+    QParam:
+      name: q
+      in: query
+      required: false
+      schema:
+        type: string
+      example: Doritos

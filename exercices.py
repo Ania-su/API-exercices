@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Optional
 from fastapi import FastAPI, Query, HTTPException
 from pydantic import BaseModel
-from starlette.responses import Response, JSONResponse
+from starlette.responses import Response
+from datetime import datetime
 
 app = FastAPI()
 
@@ -25,6 +26,18 @@ class Task(BaseModel):
 tasks: List[Task] = [
     Task(id=1, title="Faire le lit", completed=True),
     Task(id=2, title="Faire le dîner", completed=False),
+]
+
+#Product(exo4)
+class Product(BaseModel):
+    name: str
+    expiration_datetime: datetime
+    price: float
+
+products: List[Product] = [
+    Product(name="Tampico", expiration_datetime=datetime(2025, 9, 1, 12, 0), price=2500.00),
+    Product(name="Doritos", expiration_datetime=datetime(2025, 8, 30, 10, 0), price=1500.00),
+    Product(name="Socolait", expiration_datetime=datetime(2025, 8, 25, 18, 0), price=2000.00),
 ]
 
 #Exo1
@@ -75,3 +88,16 @@ def delete_tasks(ids: List[int]):
             tasks.remove(task)
             deleted.append(task)
     return deleted
+
+#Exo4
+@app.get("/products", status_code=200)
+def get_products(limit: Optional[int] = Query(None), q: Optional[str] = Query(None)):
+    result = products
+
+    if q:
+        result = [p for p in result if q.lower() in p.name.lower()]
+
+    if limit is not None:
+        result = result[:limit]
+
+    return {"message": "Produits récupérés", "data": result}
