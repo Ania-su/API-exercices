@@ -35,9 +35,9 @@ class Product(BaseModel):
     price: float
 
 products: List[Product] = [
-    Product(name="Tampico", expiration_datetime=datetime(2025, 9, 1, 12, 0), price=2500.00),
-    Product(name="Doritos", expiration_datetime=datetime(2025, 8, 30, 10, 0), price=1500.00),
-    Product(name="Socolait", expiration_datetime=datetime(2025, 8, 25, 18, 0), price=2000.00),
+    Product(name="Tampico", expiration_datetime=datetime(2025, 9, 1, 12, 54), price=2500.00),
+    Product(name="Doritos", expiration_datetime=datetime(2026, 8, 30, 10, 23), price=2000.00),
+    Product(name="Socolait", expiration_datetime=datetime(2025, 12, 25, 18, 12), price=1500.00),
 ]
 
 #Exo1
