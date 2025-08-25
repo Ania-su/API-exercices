@@ -29,7 +29,6 @@ paths:
                       expiration_datetime: 2025-12-25T18:12:00
                       price: 1500.00
                 empty:
-                  summary: Aucun produit trouvé
                   value: []
 
 components:

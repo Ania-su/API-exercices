@@ -93,11 +93,12 @@ def delete_tasks(ids: List[int]):
 @app.get("/products", status_code=200)
 def get_products(limit: Optional[int] = Query(None), q: Optional[str] = Query(None)):
     result = products
-
     if q:
-        result = [p for p in result if q.lower() in p.name.lower()]
-
-    if limit is not None:
+        filtered = []
+        for p in result:
+            if q.lower() in p.name.lower():
+                filtered.append(p)
+        result = filtered
+    if limit:
         result = result[:limit]
-
-    return {"message": "Produits récupérés", "data": result}
+    return result
